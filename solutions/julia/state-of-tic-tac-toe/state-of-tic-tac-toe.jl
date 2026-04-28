@@ -3,7 +3,7 @@ board_is_full(board) =
     !contains(board[2], ' ') &&
     !contains(board[3], ' ')
 
-function board_contains_single_win(board, player)
+function board_win_count(board, player)
 
     win_count = count(
         identity,
@@ -19,13 +19,34 @@ function board_contains_single_win(board, player)
         )
     )
 
-    return win_count == 1
+    return win_count
+
+end
+
+function board_moves_valid(board)
+
+    board_flat = board[1] * board[2]  * board[3]
+
+    O_count = length(filter(c -> c == 'O', board_flat))
+    X_count = length(filter(c -> c == 'X', board_flat))
+    O_win_count = board_win_count(board, 'O')
+    X_win_count = board_win_count(board, 'X')
+
+    return X_count - O_count ∈ [0, 1] && (X_win_count == 0 || O_win_count == 0)
 
 end
 
 function gamestate(board)
-    if board_contains_single_win(board, 'X') || board_contains_single_win(board, 'O')
-        return "victory"
+
+    if !board_moves_valid(board)
+        throw(ErrorException(""))
+    end
+
+    if board_win_count(board, 'X') ∈ [1, 2] || board_win_count(board, 'O') ∈ [1, 2]
+        return "win"
+    elseif !board_is_full(board)
+        return "ongoing"
+    elseif board_is_full(board)
+        return "draw"
     end
 end
-
