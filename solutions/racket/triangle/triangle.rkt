@@ -6,9 +6,9 @@
 
   (let
     (
-      [s1(first  sides)]
-      [s2(second sides)]
-      [s3(third  sides)]
+      [s1 (first  sides)]
+      [s2 (second sides)]
+      [s3 (third  sides)]
       )
     (cond
       [(not (and (> (+ s1 s2) s3) (> (+ s2 s3) s1) (> (+ s3 s1) s2))) #f]
