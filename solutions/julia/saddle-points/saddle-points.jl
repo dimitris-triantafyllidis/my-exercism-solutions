@@ -19,5 +19,3 @@ function saddlepoints(M)
 
     return candidates
 end
-
-saddlepoints([])
