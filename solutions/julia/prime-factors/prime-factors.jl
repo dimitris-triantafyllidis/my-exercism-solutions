@@ -1,4 +1,9 @@
 function is_prime(n::Int)
+
+    if n == 0 || n == 1
+        return false
+    end
+
     for m in 2:Int(ceil(sqrt(n)))
         if n != m && n % m == 0
             return false
