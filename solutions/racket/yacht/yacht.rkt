@@ -61,14 +61,3 @@
 
     )
   )
-
-;function score(dice, category)
-;    elseif category == "full house"
-;        dice = sort(dice)
-;        if (((dice[1] == dice[2] == dice[3]) && (dice[4] == dice[5])) || ((dice[1] == dice[2]) && (dice[3] == dice[4] == dice[5]))) && length(Set(dice)) == 2
-;            return sum(dice)
-;        else
-;            return 0
-;        end
-;    end
-;end
