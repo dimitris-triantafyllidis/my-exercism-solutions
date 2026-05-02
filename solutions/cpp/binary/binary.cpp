@@ -8,7 +8,7 @@ namespace binary {
     {
         int n = 0;
 
-        for (int i = 0; i < s.length(); i++)
+        for (int i = 0; i < int(s.length()); i++)
         {
             int idx = s.length() - 1 - i;
 
