@@ -6,7 +6,7 @@ namespace series {
 
     auto slice(const std::string &s, int l) -> std::vector<std::string>
     {
-        if (l < 1 || l > s.length())
+        if (l < 1 || l > static_cast<int>(s.length()))
             throw std::domain_error("");
 
         std::vector<std::string> slices;
