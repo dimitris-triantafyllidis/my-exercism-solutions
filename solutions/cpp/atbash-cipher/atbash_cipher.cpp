@@ -19,7 +19,7 @@ namespace atbash_cipher {
     {
         std::string e;
 
-        for(int i = 0; i < s.size(); i++)
+        for(std::size_t i = 0; i < s.size(); i++)
         {
             if (std::isdigit(s[i]))
             {
@@ -45,7 +45,7 @@ namespace atbash_cipher {
     {
         std::string e;
 
-        for(int i = 0; i < s.size(); i++)
+        for(std::size_t i = 0; i < s.size(); i++)
         {
             if (std::isdigit(s[i]))
             {
