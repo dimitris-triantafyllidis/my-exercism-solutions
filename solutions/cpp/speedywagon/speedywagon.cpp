@@ -11,7 +11,7 @@ namespace speedywagon {
     {
         int total = 0;
 
-        for (std::size_t i = 0; i < n; i++)
+        for (std::size_t i = 0; i < std::size_t(n); i++)
         {
             total += sensor_array[i].activity;
         }
