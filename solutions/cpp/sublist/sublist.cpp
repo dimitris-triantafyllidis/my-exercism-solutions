@@ -36,8 +36,7 @@ namespace sublist {
                         break;
                     else
                         continue;
-        else
-            ;
+        else {}
 
         return List_comparison::unequal;
     }
