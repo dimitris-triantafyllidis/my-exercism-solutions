@@ -20,7 +20,7 @@ namespace spiral_matrix {
         int32_t cursor_row    = 1;
         int32_t cursor_column = 1;
 
-        while (step <= n * n)
+        while (step <= int32_t(n * n))
         {
             if (run_step == run_length)
             {
