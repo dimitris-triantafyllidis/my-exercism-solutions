@@ -4,7 +4,6 @@ namespace spiral_matrix {
 
     auto spiral_matrix(uint32_t n) -> std::vector<std::vector<uint32_t>>
     {
-
         auto m = std::vector<std::vector<uint32_t>>();
         m.resize(n);
         for(std::size_t i = 0; i < m.size(); i++)
@@ -29,9 +28,7 @@ namespace spiral_matrix {
             }
 
             m[cursor_row - 1][cursor_column - 1] = step;
-
             direction = run_count % 4;
-
             run_length = n - (run_count - 1) / 2;
 
             if (direction == 0)
@@ -48,7 +45,6 @@ namespace spiral_matrix {
         }
 
         return m;
-
     }
 
 }  // namespace spiral_matrix
