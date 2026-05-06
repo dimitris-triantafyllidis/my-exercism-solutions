@@ -1,6 +1,6 @@
 def is_valid(s):
 
-    if len(s) == 13 and (s[1] == s[5] == s[11] == '-'):
+    if len(s) == 13 and (s[1] == s[5] == s[11] == "-"):
         s = s[0] + s[2:5] + s[6:11] + s[12]
     elif len(s) != 10:
         return False
