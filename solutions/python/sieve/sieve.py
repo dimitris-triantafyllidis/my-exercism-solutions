@@ -1,14 +1,14 @@
 def primes(limit):
 
-    sieve = [i for i in range(0, limit + 1)];
+    sieve = [i for i in range(0, limit + 1)]
 
     sieve[1] = 0
 
-    for i, e in enumerate(sieve):
+    for i in range(0, len(sieve)):
         if sieve[i] == 0:
             continue
         else:
-            for m in range (2 * i, len(sieve), i):
-                sieve[m] = 0;
+            for m in range (i * i, len(sieve), i):
+                sieve[m] = 0
 
     return [p for p in sieve if p != 0]
