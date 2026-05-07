@@ -35,6 +35,6 @@ public static class Identifier
                 clean.Append(identifier[i]);
             }
         }
-        return clean.ToString();
+        return clean.ToString(); 
     }
 }
