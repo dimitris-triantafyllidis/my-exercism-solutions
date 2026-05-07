@@ -25,12 +25,12 @@ namespace spiral_matrix {
             {
                 run_step = 1;
                 run_count += 1;
+                run_length = n - (run_count - 1) / 2;
             }
 
             m[cursor_row - 1][cursor_column - 1] = step;
             direction = run_count % 4;
-            run_length = n - (run_count - 1) / 2;
-
+ 
             if (direction == 0)
                 cursor_column += 1;
             else if (direction == 1)
