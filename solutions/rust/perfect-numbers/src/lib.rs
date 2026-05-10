@@ -16,10 +16,11 @@ fn aliquot_sum(n: u64) -> Option<u64> {
     let mut sum: u64 = 0;
 
     for i in 1..=n-1 {
-        sum += if n % i == 0 { i } else { 0 }
+        sum += if i.is_multiple_of(n) else { 0 }
     }
 
-    return Some(sum)
+    Some(sum)
+
 }
 
 pub fn classify(num: u64) -> Option<Classification> {
@@ -34,4 +35,5 @@ pub fn classify(num: u64) -> Option<Classification> {
             }
         }
     }
+
 }
