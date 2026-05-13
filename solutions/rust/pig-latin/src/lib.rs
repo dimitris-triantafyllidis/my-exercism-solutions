@@ -6,7 +6,7 @@ fn initial_consonants(word: &[char]) -> Vec<char> {
     let mut result = Vec::<char>::new();
 
     for (i, c) in word.into_iter().enumerate() {
-        if i < 1 && CONSONANTS.contains(c) {
+        if i == 0 && CONSONANTS.contains(c) {
             result.push(*c);
         } else if CONSONANTS.contains(c) && word[i] != 'y' {
             result.push(*c);
@@ -20,6 +20,7 @@ fn initial_consonants(word: &[char]) -> Vec<char> {
 }
 
 fn translate_word(word: &[char]) -> Vec<char> {
+
     let ic = initial_consonants(word);
     let n = word.len();
     let k = ic.len();
