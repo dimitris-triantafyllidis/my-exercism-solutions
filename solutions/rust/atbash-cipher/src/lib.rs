@@ -26,7 +26,7 @@ pub fn encode(plain: &str) -> String {
         count += 1;
     }
 
-    return out;
+    out
 
 }
 
@@ -46,6 +46,6 @@ pub fn decode(cipher: &str) -> String {
 
     }
 
-    return out;
+    out
 
 }
