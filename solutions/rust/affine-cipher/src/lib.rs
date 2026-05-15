@@ -22,12 +22,12 @@ pub fn encode(plaintext: &str, a: i32, b: i32) -> Result<String, AffineCipherErr
         else if c.is_ascii_alphabetic() {
             e.push(encode_char(c.to_ascii_lowercase(), a, b).unwrap());
         }
-        if e.len() % 6 == 5 && e.chars().last().unwrap() != ' ' {
+        if e.len() % 6 == 5 && !e.ends_with(' ') {
             e.push(' ');
         }
     }
 
-    if e.chars().last().unwrap() == ' ' {
+    if e.ends_with(' ') {
         Ok(e[..e.len() - 1].to_string())
     } else {
         Ok(e)
@@ -69,7 +69,7 @@ fn gcd(mut a: i32, mut b: i32) -> i32 {
 
 fn are_coprime(a: i32, b: i32) -> bool
 {
-    return gcd(a, b) == 1;
+    gcd(a, b) == 1
 }
 
 fn modular_multiplicative_inverse(a: i32, m: i32) -> Option<i32>
