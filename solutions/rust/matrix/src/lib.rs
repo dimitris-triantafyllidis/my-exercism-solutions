@@ -23,7 +23,7 @@ impl Matrix {
             .collect();
 
         let r = e.len();
-        let c = if e.len() > 0 { e[0].len() } else { 0 };
+        let c = if !e.is_empty() { e[0].len() } else { 0 };
 
         Self { e, r, c }
 
