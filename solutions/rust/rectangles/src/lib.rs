@@ -121,7 +121,7 @@ fn find_horizontal_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
 
 }
 
-fn find_vertical_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
+fn find_vertical_edge_pairs(edges: &[Edge]) -> Vec<(Edge, Edge)> {
 
     let mut pairs = Vec::<(Edge, Edge)>::new();
 
