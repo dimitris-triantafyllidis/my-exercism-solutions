@@ -1,7 +1,7 @@
 #[derive(PartialEq, Eq, Debug)]
 pub enum Bucket {
     One,
-    Two,
+    Two
 }
 
 /// A struct to hold your results in.
@@ -18,7 +18,12 @@ pub struct BucketStats {
 
 fn gcd(m: u8, n: u8) -> u8 {
     let mut d = m.min(n);
-    loop { if m.is_multiple_of(d) && n.is_multiple_of(d) { break; } d -= 1; }
+    loop {
+        if m.is_multiple_of(d) && n.is_multiple_of(d) {
+            break;
+        }
+        d -= 1;
+    }
     d
 }
 
@@ -30,50 +35,105 @@ pub fn solve(
     start_bucket: &Bucket,
 ) -> Option<BucketStats> {
 
-    let mut content_1: u8 = if *start_bucket == Bucket::One { capacity_1 } else { 0 };
-    let mut content_2: u8 = if *start_bucket == Bucket::Two { capacity_2 } else { 0 };
-    let mut moves: u8 = 1;
+    let small_bucket = if capacity_1 < capacity_2 { Bucket::One } else { Bucket::Two };
+    let big_bucket   = if capacity_1 < capacity_2 { Bucket::Two } else { Bucket::One };
 
-    if content_1 == goal { return Some ( BucketStats { moves: 1, goal_bucket: Bucket::One, other_bucket: 0 } ); }
-    if content_2 == goal { return Some ( BucketStats { moves: 1, goal_bucket: Bucket::Two, other_bucket: 0 } ); }
+    let capacity_small = if capacity_1 < capacity_2 { capacity_1 } else { capacity_2 };
+    let capacity_big   = if capacity_1 < capacity_2 { capacity_2 } else { capacity_1 };
 
-    if gcd(capacity_1, capacity_2).is_multiple_of(goal) {
+    if goal > capacity_big {
         return None;
     }
 
-    if capacity_1 < capacity_2 {
-        if *start_bucket == Bucket::Two {
-            loop {
-                content_2 -= capacity_1 - content_1; // Empty the big bucket to the small bucket
-                content_1 = capacity_1;
-                moves += 1;
+    let mut content_small: u8 = if *start_bucket == small_bucket { capacity_small } else { 0 };
+    let mut content_big:   u8 = if *start_bucket == big_bucket   { capacity_big   } else { 0 };
 
-                println!("{}", moves);
+    let mut moves: u8 = 1;
 
-                if content_2 == goal {
-                    return Some ( BucketStats { moves: moves, goal_bucket: Bucket::Two, other_bucket: content_1 } );
-                }
+    if content_small == goal { return Some ( BucketStats { moves: 1, goal_bucket: small_bucket, other_bucket: content_big   } ); }
+    if content_big   == goal { return Some ( BucketStats { moves: 1, goal_bucket: big_bucket,   other_bucket: content_small } ); }
 
-                moves += 1; // Empty the small bucket
-
-                if content_2 < capacity_1 {
-                    content_1 = content_2; // Empty the big bucket to the small bucket
-                    content_2 = 0;
-                    moves += 1;
-
-                    content_2 = capacity_2; // Fill the big bucket
-                    moves += 1;
-
-                    content_2 -= capacity_1 - content_1;
-                    moves += 1;
-                    if content_2 == goal {
-                        return Some ( BucketStats { moves: moves, goal_bucket: Bucket::Two, other_bucket: content_1 } );
-                    }
-                }
-            }
+    if goal == capacity_small {
+        if *start_bucket == small_bucket {
+            return Some ( BucketStats { moves: 1, goal_bucket: small_bucket, other_bucket: content_big } );
+        } else {
+            return Some ( BucketStats { moves: 2, goal_bucket: small_bucket, other_bucket: content_big } );
         }
     }
 
+    if goal == capacity_big {
+        if *start_bucket == big_bucket {
+            return Some ( BucketStats { moves: 1, goal_bucket: big_bucket, other_bucket: content_small } );
+        } else {
+            return Some ( BucketStats { moves: 2, goal_bucket: big_bucket, other_bucket: content_small } );
+        }
+    }
+
+    if !goal.is_multiple_of(gcd(capacity_1, capacity_2)) {
+        return None;
+    }
+
+    if *start_bucket == big_bucket {
+
+        loop {
+            if content_big < capacity_small - content_small {    // We can't fill the small bucket from the big bucket
+
+                content_small += content_big;                    // Empty the big bucket to the small bucket
+                content_big = 0;
+                moves += 1;
+
+                if content_small == goal { return Some ( BucketStats { moves: moves, goal_bucket: small_bucket, other_bucket: content_big } ); }
+
+                content_big = capacity_big;                      // Fill the big bucket
+                moves += 1;
+
+                if content_big == goal { return Some ( BucketStats { moves: moves, goal_bucket: big_bucket, other_bucket: content_small } ); }
+
+            } else {
+
+                content_big   -= capacity_small - content_small; // Empty the big bucket to the small bucket
+                content_small += capacity_small - content_small;
+                moves += 1;
+
+                if content_small == goal { return Some ( BucketStats { moves: moves, goal_bucket: small_bucket, other_bucket: content_big } ); }
+                if content_big   == goal { return Some ( BucketStats { moves: moves, goal_bucket: big_bucket, other_bucket: content_small } ); }
+
+                content_small = 0;                               // Empty the small bucket
+                moves += 1;
+
+            }
+        }
+    } else {
+
+        loop {
+            if content_small > capacity_big - content_big {      // We can't empty the small bucket to the big bucket
+
+                content_small -= capacity_big - content_big;     // Fill the big bucket from the small bucket
+                content_big = capacity_big;
+                moves += 1;
+
+                if content_small == goal { return Some ( BucketStats { moves: moves, goal_bucket: small_bucket, other_bucket: content_big } ); }
+                if content_big   == goal { return Some ( BucketStats { moves: moves, goal_bucket: big_bucket, other_bucket: content_small } ); }
+
+                content_big = 0;                                 // Empty the big bucket
+                moves += 1;
+
+            } else {
+
+                content_big += content_small;                    // Empty the small bucket to the big bucket
+                content_small = 0;
+                moves += 1;
+
+                if content_big == goal { return Some ( BucketStats { moves: moves, goal_bucket: big_bucket, other_bucket: content_small } ); }
+
+                content_small = capacity_small;                  // Fill the small bucket
+                moves += 1;
+
+                if content_small == goal { return Some ( BucketStats { moves: moves, goal_bucket: small_bucket, other_bucket: content_big } ); }
+
+            }
+        }
+    }
 
     None
 
