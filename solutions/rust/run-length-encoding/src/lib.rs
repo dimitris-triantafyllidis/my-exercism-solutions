@@ -1,10 +1,10 @@
 pub fn encode(source: &str) -> String {
 
-    if source == "" {
+    if source.is_empty() {
         return "".to_string()
     }
 
-    let mut run_c: char = source.chars().nth(0).unwrap();
+    let mut run_c: char = source.chars().next().unwrap();
     let mut run_l: usize = 1;
 
     let mut rle: String = "".to_string();
@@ -34,7 +34,7 @@ pub fn encode(source: &str) -> String {
 
 pub fn decode(source: &str) -> String {
 
-    if source == "" {
+    if source.is_empty() {
         return "".to_string();
     }
 
@@ -45,7 +45,7 @@ pub fn decode(source: &str) -> String {
         if c.is_ascii_digit() {
             run_l_s.push(c);
         } else {
-            if run_l_s == "" {
+            if run_l_s.is_empty() {
                 rld.push(c);
             } else {
                 rld.push_str(&c.to_string().repeat(run_l_s.parse().unwrap()));
