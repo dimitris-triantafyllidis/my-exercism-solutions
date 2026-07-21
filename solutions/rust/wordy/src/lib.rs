@@ -43,13 +43,7 @@ pub fn answer(command: &str) -> Option<i32> {
                 "-" => answer -= n,
                 "*" => answer *= n,
                 "/" => answer /= n,
-                "^" => {
-                    if answer > 0 {
-                        answer = answer.pow(n.try_into().unwrap())
-                    } else {
-                        return None
-                    }
-                },
+                "^" if answer > 0 => answer = answer.pow(n.try_into().unwrap()),
                 _ => return None
             }
         }
