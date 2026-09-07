@@ -1,8 +1,10 @@
 
+type Point = (usize, usize);
+type Edge = (Point, Point);
 
-fn find_horizontal_edges(m: &Vec<Vec<char>>) -> Vec<((usize, usize), (usize, usize))> {
+fn find_horizontal_edges(m: &Vec<Vec<char>>) -> Vec<Edge> {
 
-    let mut edges: Vec<((usize, usize), (usize, usize))> = vec![];
+    let mut edges: Vec<Edge> = vec![];
 
     let n_rows = m.len();
     let n_cols = if m.is_empty() { 0 } else { m[0].len() };
@@ -41,9 +43,9 @@ fn find_horizontal_edges(m: &Vec<Vec<char>>) -> Vec<((usize, usize), (usize, usi
 
 }
 
-fn find_vertical_edges(m: &Vec<Vec<char>>) -> Vec<((usize, usize), (usize, usize))> {
+fn find_vertical_edges(m: &Vec<Vec<char>>) -> Vec<Edge> {
 
-    let mut edges: Vec<((usize, usize), (usize, usize))> = vec![];
+    let mut edges: Vec<Edge> = vec![];
 
     let n_rows = m.len();
     let n_cols = if m.is_empty() { 0 } else { m[0].len() };
@@ -65,7 +67,7 @@ fn find_vertical_edges(m: &Vec<Vec<char>>) -> Vec<((usize, usize), (usize, usize
                 } else if m[r][c] == '+' {
                     edge_end = (r, c);
                     edges.push((edge_start, edge_end));
-                    if c < n_cols - 1 && (m[r][c + 1] == '|' || m[r][c + 1] == '+') {
+                    if r < n_rows - 1 && (m[r + 1][c] == '|' || m[r + 1][c] == '+') {
                         edge_start = edge_end;
                         state = 1;
                     } else {
@@ -82,12 +84,12 @@ fn find_vertical_edges(m: &Vec<Vec<char>>) -> Vec<((usize, usize), (usize, usize
 
 }
 
-fn expand_edges(edges: &Vec<((usize, usize), (usize, usize))>) -> Vec<((usize, usize), (usize, usize))> {
+fn expand_edges(edges: &Vec<Edge>) -> Vec<Edge> {
 
-    let mut new_edges = Vec::<((usize, usize), (usize, usize))>::new();
+    let mut new_edges = Vec::<Edge>::new();
 
     for i in 0..edges.len() {
-        for j in i..edges.len() {
+        for j in i + 1..edges.len() {
             if edges[i].1 == edges[j].0 {
                 let new_edge = (edges[i].0, edges[j].1);
                 if !edges.contains(&new_edge) && !new_edges.contains(&new_edge) {
@@ -101,7 +103,57 @@ fn expand_edges(edges: &Vec<((usize, usize), (usize, usize))>) -> Vec<((usize, u
 
 }
 
+fn find_horizontal_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
 
+    let mut pairs = Vec::<(Edge, Edge)>::new();
+
+    for i in 0..edges.len() {
+        for j in i + 1..edges.len() {
+            if edges[i].0.1 == edges[j].0.1 && edges[i].1.1 == edges[j].1.1 {
+                pairs.push((edges[i], edges[j]));
+            }
+        }
+    }
+
+    pairs
+
+}
+
+fn find_vertical_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
+
+    let mut pairs = Vec::<(Edge, Edge)>::new();
+
+    for i in 0..edges.len() {
+        for j in i + 1..edges.len() {
+            if edges[i].0.0 == edges[j].0.0 && edges[i].1.0 == edges[j].1.0 {
+                pairs.push((edges[i], edges[j]));
+            }
+        }
+    }
+
+    pairs
+
+}
+
+fn count_triangles(h_edge_pairs: &Vec<(Edge, Edge)>, v_edge_pairs: &Vec<(Edge, Edge)>) -> u32 {
+
+    let mut count: u32 = 0;
+
+    for i in 0..h_edge_pairs.len() {
+        for j in 0..v_edge_pairs.len() {
+            if
+               (h_edge_pairs[i].0.0 == v_edge_pairs[j].0.0) &&
+               (h_edge_pairs[i].0.0 == v_edge_pairs[j].1.0) &&
+               (h_edge_pairs[i].1.0 == v_edge_pairs[j].0.0) &&
+               (h_edge_pairs[i].1.0 == v_edge_pairs[j].1.0) {
+                count += 1;
+            }
+        }
+    }
+
+    count
+
+}
 
 pub fn count(lines: &[&str]) -> u32 {
 
@@ -126,9 +178,9 @@ pub fn count(lines: &[&str]) -> u32 {
         if !new_edges.is_empty() { v_edges.extend(new_edges); } else { break; }
     }
 
-    println!("{:?}", h_edges);
-    println!("{:?}", v_edges);
+    let h_edge_pairs = find_horizontal_edge_pairs(&h_edges);
+    let v_edge_pairs = find_vertical_edge_pairs(&v_edges);
 
-    0
+    count_triangles(&h_edge_pairs, &v_edge_pairs)
 
 }
