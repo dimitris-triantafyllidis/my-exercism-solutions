@@ -95,6 +95,11 @@ pub fn encode(n: u64) -> String {
         }
     }
 
-    say.trim().to_string()
+    if say.is_empty() {
+        "zero".to_string()
+    }
+    else {
+        say.trim().to_string()
+    }
 
 }
