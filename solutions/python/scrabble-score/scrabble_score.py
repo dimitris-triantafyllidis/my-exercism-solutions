@@ -21,10 +21,10 @@ def letter_points(c):
 
 def score(word):
 
-    sum = 0
+    pts = 0
 
     for letter in word:
-        sum += letter_points(letter)
+        pts += letter_points(letter)
 
-    return sum
+    return pts
 
