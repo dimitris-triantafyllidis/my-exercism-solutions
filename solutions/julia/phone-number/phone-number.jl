@@ -11,5 +11,3 @@ function clean(phone_number)
     end
 
 end
-
-clean("(223) 456-7890")
