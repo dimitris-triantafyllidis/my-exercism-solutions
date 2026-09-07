@@ -4,7 +4,7 @@ pub fn find(sum: u32) -> HashSet<[u32; 3]> {
 
     let mut triplets = HashSet::<[u32; 3]>::new();
 
-    if (sum < 12) || (sum % 1 == 1) {
+    if (sum < 12) {
         return triplets;
     }
 
