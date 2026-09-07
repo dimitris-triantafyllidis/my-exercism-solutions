@@ -2,16 +2,6 @@ module Palindromes (largestPalindrome, smallestPalindrome) where
 
 import Data.List (sortOn)
 
--- @inline function is_palindrome(n::Int)
---    rev = 0
---    x = n
---    while x > 0
---        rev = rev * 10 + rem(x, 10)
---        x = div(x, 10)
---    end
---    return rev == n
---end
-
 isPalindrome :: Integer -> Bool
 isPalindrome n = show n == reverse (show n)
 
