@@ -10,21 +10,18 @@ def is_paired(input_string):
                 return False
             if stack[-1] != "(":
                 return False
-            else:
-                stack.pop()
+            stack.pop()
         elif c == "]":
             if stack == []:
                 return False
             if stack[-1] != "[":
                 return False
-            else:
-                stack.pop()
+            stack.pop()
         elif c == "}":
             if stack == []:
                 return False
             if stack[-1] != "{":
                 return False
-            else:
-                stack.pop()
+            stack.pop()
 
     return stack == []
