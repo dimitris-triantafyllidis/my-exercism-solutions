@@ -1,7 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using System.Security.Cryptography;
-
 public struct Coord
 {
     public Coord(ushort x, ushort y)
@@ -28,28 +24,14 @@ public struct Plot
     Coord mCoord2;
     Coord mCoord3;
 
-    public int Side()
-    {
-        return Math.Max(Math.Abs(mCoord0.X - mCoord1.X), Math.Abs(mCoord1.X - mCoord2.Y));
-    }
+    public int Side() => Math.Max(Math.Abs(mCoord0.X - mCoord1.X), Math.Abs(mCoord1.X - mCoord2.Y));
 }
 
 public class ClaimsHandler
 {
-    public void StakeClaim(Plot plot)
-    {
-        claims = [.. claims, plot];
-    }
-
-    public bool IsClaimStaked(Plot plot)
-    {
-        return claims.Contains(plot);
-    }
-
-    public bool IsLastClaim(Plot plot)
-    {
-        return plot.Equals(claims[^1]);
-    }
+    public void StakeClaim(Plot plot) => claims = [.. claims, plot];
+    public bool IsClaimStaked(Plot plot) => claims.Contains(plot);
+    public bool IsLastClaim(Plot plot) => plot.Equals(claims[^1]);
 
     public Plot GetClaimWithLongestSide()
     {
