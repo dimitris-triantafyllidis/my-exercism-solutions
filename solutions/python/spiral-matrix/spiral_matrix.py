@@ -20,7 +20,7 @@ def spiral_matrix(size):
             run_length = size - (run_count - 1) // 2
 
         m[cursor_row - 1][cursor_column - 1] = step
-        direction = run_count % 4;
+        direction = run_count % 4
 
         if direction == 0:
             cursor_column += 1
@@ -34,4 +34,4 @@ def spiral_matrix(size):
         step += 1
         run_step += 1
 
-    return m;
+    return m
