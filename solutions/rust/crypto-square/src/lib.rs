@@ -25,7 +25,7 @@ pub fn encrypt(input: &str) -> String {
         };
 
     let target = r * c;
-    p.extend(std::iter::repeat(' ').take(target - p.len()));
+    p.extend(std::iter::repeat_n(' ', target - p.len()));
 
     let mut ct = vec![' '; r * c + (c - 1)];
 
