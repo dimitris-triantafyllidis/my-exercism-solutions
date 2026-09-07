@@ -90,10 +90,11 @@ fn expand_edges(edges: &Vec<Edge>) -> Vec<Edge> {
 
     for i in 0..edges.len() {
         for j in i + 1..edges.len() {
-            if edges[i].1 == edges[j].0 {
-                let new_edge = (edges[i].0, edges[j].1);
+            let (e1, e2) = (edges[i], edges[j]);
+            if e1.1 == e2.0 {
+                let new_edge = (e1.0, e2.1);
                 if !edges.contains(&new_edge) && !new_edges.contains(&new_edge) {
-                    new_edges.push((edges[i].0, edges[j].1));
+                    new_edges.push((e1.0, e2.1));
                 }
             }
         }
@@ -109,8 +110,9 @@ fn find_horizontal_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
 
     for i in 0..edges.len() {
         for j in i + 1..edges.len() {
-            if edges[i].0.1 == edges[j].0.1 && edges[i].1.1 == edges[j].1.1 {
-                pairs.push((edges[i], edges[j]));
+            let (e1, e2) = (edges[i], edges[j]);
+            if e1.0.1 == e2.0.1 && e1.1.1 == e2.1.1 {
+                pairs.push((e1, e2));
             }
         }
     }
@@ -125,8 +127,9 @@ fn find_vertical_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
 
     for i in 0..edges.len() {
         for j in i + 1..edges.len() {
-            if edges[i].0.0 == edges[j].0.0 && edges[i].1.0 == edges[j].1.0 {
-                pairs.push((edges[i], edges[j]));
+            let (e1, e2) = (edges[i], edges[j]);
+            if e1.0.0 == e2.0.0 && e1.1.0 == e2.1.0 {
+                pairs.push((e1, e2));
             }
         }
     }
@@ -135,17 +138,16 @@ fn find_vertical_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
 
 }
 
-fn count_triangles(h_edge_pairs: &Vec<(Edge, Edge)>, v_edge_pairs: &Vec<(Edge, Edge)>) -> u32 {
+fn count_rectangles(h_pairs: &[(Edge, Edge)], v_pairs: &[(Edge, Edge)]) -> u32 {
 
-    let mut count: u32 = 0;
+    let mut count = 0;
 
-    for i in 0..h_edge_pairs.len() {
-        for j in 0..v_edge_pairs.len() {
-            if
-               (h_edge_pairs[i].0.0 == v_edge_pairs[j].0.0) &&
-               (h_edge_pairs[i].0.0 == v_edge_pairs[j].1.0) &&
-               (h_edge_pairs[i].1.0 == v_edge_pairs[j].0.0) &&
-               (h_edge_pairs[i].1.0 == v_edge_pairs[j].1.0) {
+    for (h1, h2) in h_pairs {
+        for (v1, v2) in v_pairs {
+            if (h1.0 == v1.0  && h1.1 == v2.0 && h2.0 == v1.1 && h2.1 == v2.1) ||
+               (h2.0 == v1.0  && h2.1 == v2.0 && h1.0 == v1.1 && h1.1 == v2.1) ||
+               (h2.0 == v2.0  && h2.1 == v1.0 && h1.0 == v2.1 && h1.1 == v1.1) ||
+               (h1.0 == v2.0  && h1.1 == v1.0 && h2.0 == v2.1 && h2.1 == v1.1) {
                 count += 1;
             }
         }
@@ -181,6 +183,6 @@ pub fn count(lines: &[&str]) -> u32 {
     let h_edge_pairs = find_horizontal_edge_pairs(&h_edges);
     let v_edge_pairs = find_vertical_edge_pairs(&v_edges);
 
-    count_triangles(&h_edge_pairs, &v_edge_pairs)
+    count_rectangles(&h_edge_pairs, &v_edge_pairs)
 
 }
