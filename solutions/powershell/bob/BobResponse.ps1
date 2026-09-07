@@ -30,7 +30,7 @@ function Get-BobResponse() {
 
     $HeyBob = $HeyBob.Trim()
 
-    $IsSilence       = $HeyBob -eq $null
+    $IsSilence       = $HeyBob -eq ""
     $IsQuestion      = $HeyBob.EndsWith("?") -and (-not ($HeyBob.StartsWith("?")))
     $ContainsLetters = $HeyBob -match '[A-Za-z]'
     $IsYelling       = $ContainsLetters -and($HeyBob.ToUpper() -ceq $HeyBob)
