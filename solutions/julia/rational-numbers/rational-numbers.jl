@@ -34,19 +34,6 @@ end
 
 function RationalNumber(n::T, d::T) where T <: Integer
 
-    if d == 0
-        throw(ArgumentError(""))
-    end
-
-    g = gcd(n, d)
-    n = div(n, g)
-    d = div(d, g)
-
-    if d < 0
-        n = -n
-        d = -d
-    end
-
     RationalNumber{T}(n, d)
 
 end
