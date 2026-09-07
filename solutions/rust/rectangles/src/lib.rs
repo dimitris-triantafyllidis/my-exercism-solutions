@@ -2,7 +2,7 @@
 type Point = (usize, usize);
 type Edge = (Point, Point);
 
-fn find_horizontal_edges(m: &Vec<Vec<char>>) -> Vec<Edge> {
+fn find_horizontal_edges(m: &[Vec<char>]) -> Vec<Edge> {
 
     let mut edges: Vec<Edge> = vec![];
 
@@ -43,7 +43,7 @@ fn find_horizontal_edges(m: &Vec<Vec<char>>) -> Vec<Edge> {
 
 }
 
-fn find_vertical_edges(m: &Vec<Vec<char>>) -> Vec<Edge> {
+fn find_vertical_edges(m: &[Vec<char>]) -> Vec<Edge> {
 
     let mut edges: Vec<Edge> = vec![];
 
@@ -84,7 +84,7 @@ fn find_vertical_edges(m: &Vec<Vec<char>>) -> Vec<Edge> {
 
 }
 
-fn expand_edges(edges: &Vec<Edge>) -> Vec<Edge> {
+fn expand_edges(edges: &[Edge]) -> Vec<Edge> {
 
     let mut new_edges = Vec::<Edge>::new();
 
@@ -104,7 +104,7 @@ fn expand_edges(edges: &Vec<Edge>) -> Vec<Edge> {
 
 }
 
-fn find_horizontal_edge_pairs(edges: &Vec<Edge>) -> Vec<(Edge, Edge)> {
+fn find_horizontal_edge_pairs(edges: &[Edge]) -> Vec<(Edge, Edge)> {
 
     let mut pairs = Vec::<(Edge, Edge)>::new();
 
