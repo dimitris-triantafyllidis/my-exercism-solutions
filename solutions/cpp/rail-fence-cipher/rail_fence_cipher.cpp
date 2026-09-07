@@ -19,8 +19,8 @@ namespace rail_fence_cipher {
 
         std::vector<std::string> rails(num_rails);
 
-        std::size_t rail_idx = 0;
-        std::size_t rail_idx_dir = 0;
+        int rail_idx = 0;
+        int rail_idx_dir = 0;
 
         for (std::size_t i = 0; i < clean.size(); i++)
         {
@@ -53,7 +53,7 @@ namespace rail_fence_cipher {
 
         std::vector<std::size_t> rail_lengths(num_rails, 0);
 
-        std::size_t rail_idx = 0;
+        int rail_idx = 0;
         int rail_idx_dir = 1;
 
         for (std::size_t i = 0; i < n; i++)
