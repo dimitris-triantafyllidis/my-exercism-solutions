@@ -2,34 +2,29 @@
 
 (provide nth-prime)
 
-(define (primes limit)
-
-  (define sieve (range 2 (add1 limit)))
-
-  (define (primes-recurse sieve base-multiple limit)
+(define (prime? n)
+  (define (prime?-recurse n m)
     (cond
-      [(< limit 2) '()]
-      [(= base-multiple limit) sieve]
-      [else (primes-recurse (filter (lambda (n) (or (<= n base-multiple) (not (zero? (modulo n base-multiple))))) sieve) (add1 base-multiple) limit)]
-      ))
-
-  (primes-recurse sieve 2 limit)
-
+      [(< n 2) #f]
+      [(> m (sqrt n)) #t]
+      [(zero? (modulo n m)) #f]
+      [else (prime?-recurse n (add1 m))]
+      )
+    )
+  (prime?-recurse n 2)
   )
 
 (define (nth-prime number)
-
-  (define upper-bound-for-nth-prime
-    (if
-      (<= number 6)
-      13
-      (ceiling (* number (+ (log number) (log (log number)))))
+  (define (nth-prime-recurse number m)
+    (cond
+      [(and (prime? m) (zero? (sub1 number))) m]
+      [(prime? m) (nth-prime-recurse (sub1 number) (add1 m))]
+      [(not (prime? m)) (nth-prime-recurse number (add1 m))]
       )
-  )
-
+    )
   (if
-    (zero? number)
-    (error 'nth-prime "")
-    (list-ref (primes upper-bound-for-nth-prime) (sub1 number))
+    (< number 1)
+    (error 'nth-prime "no zeroth prime")
+    (nth-prime-recurse number 0)
     )
   )
