@@ -18,7 +18,7 @@ impl School {
 
     pub fn grades(&self) -> Vec<u32> {
         let mut vg = Vec::<u32>::new();
-        for (_, g) in &self.students {
+        for g in self.students.values() {
             if !vg.contains(g) {
                 vg.push(*g);
             }
