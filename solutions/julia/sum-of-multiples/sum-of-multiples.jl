@@ -21,5 +21,3 @@ function sum_of_multiples(limit, factors)
 
     return sum(Set(m))
 end
-
-sum_of_multiples(20, [3 5])
