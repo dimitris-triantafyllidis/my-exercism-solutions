@@ -50,9 +50,6 @@ pub fn solve(
 
     let mut moves: u8 = 1;
 
-    if content_small == goal { return Some ( BucketStats { moves: 1, goal_bucket: small_bucket, other_bucket: content_big   } ); }
-    if content_big   == goal { return Some ( BucketStats { moves: 1, goal_bucket: big_bucket,   other_bucket: content_small } ); }
-
     if goal == capacity_small {
         if *start_bucket == small_bucket {
             return Some ( BucketStats { moves: 1, goal_bucket: small_bucket, other_bucket: content_big } );
