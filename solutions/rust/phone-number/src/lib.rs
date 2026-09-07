@@ -28,9 +28,7 @@ pub fn number(user_number: &str) -> Option<String> {
         Some ( f.iter().skip(1).collect() )
     }
     else {
-        return None
+        None
     }
 
 }
-
-
