@@ -1,4 +1,4 @@
-import Base: in
+import Base: in, push!
 
 mutable struct BinarySearchTree
     data::Union{Int, Nothing}
