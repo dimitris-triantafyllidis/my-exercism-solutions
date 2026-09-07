@@ -65,11 +65,3 @@ function Base.empty!(cb::CircularBuffer)
     cb.n = 0
     return cb
 end
-
-        cb = CircularBuffer{Int}(2)
-        empty!(cb) === cb
-        push!(cb, 1; overwrite=true) === cb
-        push!(cb, 2; overwrite=true) === cb
-        push!(cb, 4; overwrite=true) === cb
-        popfirst!(cb) == 2
-        popfirst!(cb) == 4
