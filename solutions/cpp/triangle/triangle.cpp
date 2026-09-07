@@ -6,7 +6,7 @@ namespace triangle {
 
     auto kind(double a, double b, double c) -> flavor
     {
-        if  (
+        if (
             a == 0 ||
             b == 0 ||
             c == 0 ||
