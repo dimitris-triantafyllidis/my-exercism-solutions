@@ -16,7 +16,7 @@ fn aliquot_sum(n: u64) -> Option<u64> {
     let mut sum: u64 = 0;
 
     for i in 1..=n-1 {
-        sum += if i.is_multiple_of(n) else { 0 }
+        sum += if n.is_multiple_of(i) { i } else { 0 }
     }
 
     Some(sum)
