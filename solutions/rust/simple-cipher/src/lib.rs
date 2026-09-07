@@ -1,9 +1,6 @@
-use rand::prelude::*;
-use rand::RngExt;
-
 fn prepare_key(key: &str) -> Option<Vec<u8>> {
 
-    if key.len() == 0 {
+    if key.is_empty() {
         return None;
     }
 
