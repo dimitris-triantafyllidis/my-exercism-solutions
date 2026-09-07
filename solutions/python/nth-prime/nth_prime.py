@@ -24,6 +24,7 @@ def next_prime(n):
     raise ValueError("")
 
 def prime(number):
+
     if number == 0:
         raise ValueError ("there is no zeroth prime")
     if number < 0:
