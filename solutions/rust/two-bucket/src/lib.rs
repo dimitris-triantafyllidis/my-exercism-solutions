@@ -135,6 +135,4 @@ pub fn solve(
         }
     }
 
-    None
-
 }
