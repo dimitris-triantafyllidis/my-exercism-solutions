@@ -33,16 +33,11 @@ add_base_color:
 
 global make_color_combination
 make_color_combination:
-
     mov r14, rdi
-
     mov edi, dword [base_color]
     mov esi, dword [rsi]
-
     call combining_function
-
     mov dword [r14], eax
-
     ret
 
 %ifidn __OUTPUT_FORMAT__,elf64
